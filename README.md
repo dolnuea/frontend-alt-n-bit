@@ -1,5 +1,12 @@
 # frontend-alt-n-bit
 
+## Requirements for Vue3 ###
+* Install [Node.js](https://nodejs.org/) version 16.0 or higher
+* Install Vue 3 on your computer: 
+``` 
+npm install -g @vue/cli
+```
+
 ## Project setup
 ```
 npm install
