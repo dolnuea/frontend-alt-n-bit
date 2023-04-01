@@ -1,34 +1,44 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <Header msg="Welcome to Your Vue.js App" />
-    <p>Upload file here</p>
-    <v-file-input label="File input"></v-file-input>
+    <Header></Header>
 
-    <p>OR.... enter text below!</p>
+    <v-container align-center max-width="600">
+      <v-file-input label="Upload file for encryption/decryption" accept="image/*" @change="fileChanged" class="mb-4 ml-n10" />
 
-    <v-container fluid>
-    <v-textarea
-      label="Enter ciphertext/plaintext text here"
-      no-resize
-      rows="10"
-      :model-value="value"
-    ></v-textarea>
-  </v-container>
+      <v-row>
+        <v-col cols="12" sm="4">
+          <v-text-field label="Number of bits" v-model="numBits" class="mb-4" />
+        </v-col>
+      </v-row>
 
-    <v-btn style="margin: 20px;">Encrypt</v-btn>
-    <v-btn>Decrypt</v-btn>
+      <v-row>
+        <v-col cols="12" sm="8">
+          <v-textarea label="Text for encryption/decryption" v-model="text" no-resize rows="10" class="mb-4 mr-4" />
+        </v-col>
+      </v-row>
+    </v-container>
 
-    <v-row justify="center" style="margin: 50px;">
-    <v-col cols="12" sm="8" md="6">
-      <v-card>
-        <v-card title="Results" rounded min-height="500"></v-card>
-      </v-card>
-    </v-col>
-  </v-row>
+    <v-row>
+      <v-col>
+        <v-btn color="primary" class="mr-4" @click="encrypt">Encrypt</v-btn>
+        <v-btn color="primary" @click="decrypt">Decrypt</v-btn>
+      </v-col>
+    </v-row>
+
+    <v-container>
+      <v-row justify="center" class="mt-4">
+        <v-col cols="12" sm="8" md="6">
+          <v-card v-if="result" rounded min-height="500">
+            <v-img v-if="isImage" :src="result" width="100%" height="auto" />
+            <v-card-text v-else>{{ result }}</v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
   </div>
 </template>
+
 
 <script>
 // @ is an alias to /src
@@ -38,6 +48,47 @@ export default {
   name: "HomeView",
   components: {
     Header,
+  },
+  data() {
+    return {
+      numBits: '',
+      text: '',
+      file: null,
+      isImage: false,
+      result: null,
+    };
+  },
+  methods: {
+    fileChanged(event) {
+      this.file = event.target.files[0];
+      this.isImage = this.file.type.startsWith('image/');
+    },
+    async encrypt() {
+      if (this.file) {
+        if (this.isImage) {
+          const encryptedImage = await encryptImage(this.file, this.numBits);
+          this.result = URL.createObjectURL(encryptedImage);
+        } else {
+          // handle non-image file encryption
+        }
+      } else {
+        const encryptedText = encryptText(this.text, this.numBits);
+        this.result = encryptedText;
+      }
+    },
+    async decrypt() {
+      if (this.file) {
+        if (this.isImage) {
+          const decryptedImage = await decryptImage(this.file, this.numBits);
+          this.result = URL.createObjectURL(decryptedImage);
+        } else {
+          // handle non-image file decryption
+        }
+      } else {
+        const decryptedText = decryptText(this.text, this.numBits);
+        this.result = decryptedText;
+      }
+    },
   },
 };
 </script>
