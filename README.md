@@ -1,5 +1,7 @@
 # frontend-alt-n-bit
 
+### Navigate to the [demo](https://dolnuea.github.io/frontend-alt-n-bit/)! ###
+
 ## Requirements for Vue3 ###
 * Install [Node.js](https://nodejs.org/) version 16.0 or higher
 * Install Vue 3 on your computer: 
