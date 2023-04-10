@@ -3,11 +3,12 @@
     <Header></Header>
 
     <v-container align-center max-width="600">
-      <v-file-input label="Upload file for encryption/decryption" accept="image/*" @change="fileChanged" class="mb-4 ml-n10" />
+      <v-file-input label="Upload file for encryption/decryption" accept="image/*" @change="fileChanged"
+        class="mb-4 ml-n10" />
 
       <v-row>
         <v-col cols="12" sm="4">
-          <v-text-field label="Number of bits" v-model="numBits" class="mb-4" />
+          <v-text-field label="Number of blocks 'n'" v-model="numBlocks" class="mb-4" />
         </v-col>
       </v-row>
 
@@ -43,6 +44,7 @@
 <script>
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
+import axios from 'axios';
 
 export default {
   name: "HomeView",
@@ -51,7 +53,7 @@ export default {
   },
   data() {
     return {
-      numBits: '',
+      numBlocks: '',
       text: '',
       file: null,
       isImage: false,
@@ -66,27 +68,35 @@ export default {
     async encrypt() {
       if (this.file) {
         if (this.isImage) {
-          const encryptedImage = await encryptImage(this.file, this.numBits);
-          this.result = URL.createObjectURL(encryptedImage);
+          const formData = new FormData();
+          formData.append('image', this.file);
+          formData.append('numBlocks', this.numBlocks);
+
+          const response = await axios.post('/encrypt-image', formData);
+          this.result = response.data;
         } else {
           // handle non-image file encryption
         }
       } else {
-        const encryptedText = encryptText(this.text, this.numBits);
-        this.result = encryptedText;
+        const response = await axios.post('/encrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        this.result = response.data;
       }
     },
     async decrypt() {
       if (this.file) {
         if (this.isImage) {
-          const decryptedImage = await decryptImage(this.file, this.numBits);
-          this.result = URL.createObjectURL(decryptedImage);
+          const formData = new FormData();
+          formData.append('image', this.file);
+          formData.append('numBlocks', this.numBlocks);
+
+          const response = await axios.post('/decrypt-image', formData);
+          this.result = response.data;
         } else {
           // handle non-image file decryption
         }
       } else {
-        const decryptedText = decryptText(this.text, this.numBits);
-        this.result = decryptedText;
+        const response = await axios.post('/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        this.result = response.data;
       }
     },
   },
