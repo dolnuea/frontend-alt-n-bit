@@ -36,3 +36,8 @@ npm run deploy
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### To work with flask
+```
+npm install axios
+```

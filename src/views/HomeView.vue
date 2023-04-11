@@ -37,6 +37,13 @@
       </v-row>
     </v-container>
 
+<!-- form originally used to test the if frontend was connected with backend -->
+    <!-- <form @submit.prevent="sendMessage">
+      <input type="text" v-model="message">
+      <button type="submit">Send</button>
+    </form> -->
+  
+
   </div>
 </template>
 
@@ -61,25 +68,47 @@ export default {
     };
   },
   methods: {
+    // Test to see if sending messages works
+    // sendMessage() {
+    //   axios.post('http://127.0.0.1:5000/', { message: this.message })
+    //     .then(response => {
+    //       console.log(response.data);
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // },
+
     fileChanged(event) {
       this.file = event.target.files[0];
       this.isImage = this.file.type.startsWith('image/');
     },
+
+    // Send encryption data to the flask app
     async encrypt() {
       if (this.file) {
         if (this.isImage) {
+          // if image file is being encrypted, then send to image url
           const formData = new FormData();
           formData.append('image', this.file);
           formData.append('numBlocks', this.numBlocks);
 
-          const response = await axios.post('/encrypt-image', formData);
+          const response = await axios.post('http://127.0.0.1:5000/encrypt-image', formData);
           this.result = response.data;
+          console.log(response.data);
         } else {
           // handle non-image file encryption
         }
       } else {
-        const response = await axios.post('/encrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        const response = await axios.post('http://127.0.0.1:5000/encrypt-text', { text: this.text, numBlocks: this.numBlocks });
+          // .then(response => {
+          //   console.log(response.data);
+          // })
+          // .catch(error => {
+          //   console.error(error);
+          // });
         this.result = response.data;
+        console.log(response.data);
       }
     },
     async decrypt() {
@@ -89,14 +118,17 @@ export default {
           formData.append('image', this.file);
           formData.append('numBlocks', this.numBlocks);
 
-          const response = await axios.post('/decrypt-image', formData);
+          const response = await axios.post('http://127.0.0.1:5000/decrypt-image', formData);
           this.result = response.data;
+          console.log(response.data);
         } else {
           // handle non-image file decryption
         }
       } else {
-        const response = await axios.post('/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        // const response = await axios.post('/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        const response = await axios.post('http://127.0.0.1:5000/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
         this.result = response.data;
+        console.log(response.data);
       }
     },
   },
