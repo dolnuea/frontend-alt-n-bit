@@ -1,22 +1,37 @@
 <template>
-  <div class="hello">
-    <v-toolbar
-      color="black"
-      dark
-      prominent
-      image="https://png.pngtree.com/thumb_back/fh260/background/20210828/pngtree-digital-code-encryption-dark-blue-technology-background-image_770047.jpg"
-    >
+  <v-card>
+    <v-toolbar color="primary">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Alternative N-bit Key Data Encryption for Block Ciphers</v-toolbar-title>
+      <v-toolbar-title>Alternate N-Bit Key Encryption and Secret Sharing Showcase</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn icon>
-        <v-icon>mdi-export</v-icon>
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+
+      <template v-slot:extension>
+        <v-tabs v-model="tab" align-tabs="title">
+          <router-link v-for="(item, index) in items" :key="index" :to="item.link">
+            <v-tab :value="item.name">
+              {{ item.name }}
+            </v-tab>
+          </router-link>
+        </v-tabs>
+      </template>
     </v-toolbar>
-  </div>
+
+    <v-window v-model="tab">
+      <v-window-item v-for="(item, index) in items" :key="index" :value="item.name">
+        {{ item.content }}
+      </v-window-item>
+    </v-window>
+  </v-card>
 </template>
 
 <script>
@@ -24,6 +39,28 @@ export default {
   name: "Header",
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      tab: null,
+      items: [
+        {
+          name: 'Alternate N Bit Encryption',
+          link: '/',
+          content: 'Content for Alternate N Bit Encryption',
+        },
+        {
+          name: 'Secret Sharing and Homomorphism',
+          link: '/sss',
+          content: 'Content for Secret Sharing and Homomorphism',
+        },
+        {
+          name: 'About our Team!',
+          link: '/about',
+          content: 'Content for About our Team!',
+        },
+      ]
+    }
   },
 };
 </script>
@@ -33,15 +70,18 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
-  color: #42b983;
+  color: #eaa5d8;
 }
 </style>

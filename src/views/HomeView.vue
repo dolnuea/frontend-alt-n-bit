@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="AltNBit">
     <Header></Header>
 
     <v-container align-center max-width="600">
@@ -54,7 +54,7 @@ import Header from "@/components/Header.vue";
 import axios from 'axios';
 
 export default {
-  name: "HomeView",
+  name: "AltNBit",
   components: {
     Header,
   },
