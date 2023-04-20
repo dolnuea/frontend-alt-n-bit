@@ -1,6 +1,4 @@
 <template>
-  <div class="AltNBit">
-    <Header></Header>
 
     <v-container align-center max-width="600">
       <v-file-input label="Upload file for encryption/decryption" accept="image/*" @change="fileChanged"
@@ -43,8 +41,6 @@
       <button type="submit">Send</button>
     </form> -->
   
-
-  </div>
 </template>
 
 
@@ -54,10 +50,6 @@ import Header from "@/components/Header.vue";
 import axios from 'axios';
 
 export default {
-  name: "AltNBit",
-  components: {
-    Header,
-  },
   data() {
     return {
       numBlocks: '',
@@ -136,11 +128,6 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  text-align: center;
-  color: #2c3e50;
-  /* margin-top: 60px; */
-}
 
 p {
   margin: 40px 20px 20px;

@@ -1,11 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import AltNBit from "../views/AltNBitView.vue";
+import SSS from "../views/SSSView.vue";
 
 const routes = [
+
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: "/", 
+    name: "AltNBit",
+    component: AltNBit
+  },
+  {
+    path:'/sss',
+    name: 'SSS',
+    component: SSS,
   },
   {
     path: "/about",

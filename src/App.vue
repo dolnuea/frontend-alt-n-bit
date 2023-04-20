@@ -1,10 +1,33 @@
 <template>
+  <v-app>
+
+    <Header></Header>
+    <v-main>
+      <router-view />
+    </v-main>
+
+  </v-app>
   <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
-  <router-view />
+  
 </template>
+
+<script>
+import Header from "@/components/Header.vue";
+import { useDisplay } from "vuetify";
+
+export default {
+  components: {
+    Header,
+  },
+  setup() {
+    const { xs, mdAndUp } = useDisplay();
+    return { xs, mdAndUp };
+  },
+};
+</script>
 
 <style>
 #app {
