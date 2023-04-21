@@ -1,19 +1,23 @@
 <template>
   <v-card>
-    <v-toolbar color="primary">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-toolbar color="primary" class="pt-5">
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+
+      <v-avatar size="200" style="position: absolute; right: 0;">
+        <img src="https://media.tenor.com/ZmZ7UKIc0soAAAAM/anonymous-anonymous-bites-back.gif" alt="avatar">
+      </v-avatar>
 
       <v-toolbar-title>Alternate N-Bit Key Encryption and Secret Sharing Showcase</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+      </v-btn> -->
 
       <template v-slot:extension>
         <v-tabs v-model="tab" align-tabs="title">
@@ -27,7 +31,7 @@
     </v-toolbar>
 
     <v-window v-model="tab">
-      <v-window-item v-for="(item, index) in items" :key="index" :value="item.name">
+      <v-window-item v-for="(item, index) in items" :key="index" :value="item.name" >
         {{ item.content }}
       </v-window-item>
     </v-window>
@@ -47,12 +51,12 @@ export default {
         {
           name: 'Alternate N Bit Encryption',
           link: '/',
-          content: 'Content for Alternate N Bit Encryption',
+          content: 'Overcome post-encryption patterns with Alternate N Bit Encryption! 💥',
         },
         {
           name: 'Secret Sharing and Homomorphism',
           link: '/sss',
-          content: 'Content for Secret Sharing and Homomorphism',
+          content: 'Secret sharing with downscaling and homomorphism! 🤫',
         },
         {
           name: 'About our Team!',
@@ -84,4 +88,21 @@ li {
 a {
   color: #eaa5d8;
 }
+
+/* .v-avatar {
+  position: relative;
+  margin-right: 0;
+  width: 200px;
+  height: 200px;
+}
+
+.v-avatar img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+} */
+
 </style>
