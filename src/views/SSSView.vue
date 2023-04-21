@@ -16,18 +16,26 @@
   </v-container>
 
   <v-row>
-      <v-col>
-        <v-btn color="primary" class="mr-4" @click="generateShares">Encrypt</v-btn>
-        <v-btn color="primary" @click="recoverSecret">Decrypt</v-btn>
-      </v-col>
-    </v-row>
+    <v-col>
+      <v-btn color="primary" class="mr-4" @click="generateShares">Encrypt</v-btn>
+      <v-btn color="primary" @click="recoverSecret">Decrypt</v-btn>
+    </v-col>
+  </v-row>
 
   <v-container>
     <v-row justify="center" class="mt-4">
       <v-col cols="12" sm="8" md="6">
         <v-card v-if="result" rounded min-height="500">
-          <v-img v-if="isImage" :src="result" width="100%" height="auto" />
-          <v-card-text v-else>{{ result }}</v-card-text>
+
+          <div v-if="encrypt">
+            <v-col v-for="(file, index) in shares" :key="index" cols="12" md="4">
+              <v-img :src="file" height="200" contain></v-img>
+            </v-col>
+          </div>
+
+          <div v-else>
+            <v-img :src="result" width="100%" height="auto" />
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -35,7 +43,6 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
 import axios from 'axios';
 
 export default {
@@ -48,6 +55,7 @@ export default {
       file: null,
       isImage: false,
       shares: [],
+      encrypt: false,
     };
   },
   methods: {
@@ -57,6 +65,7 @@ export default {
     },
     // encrypt
     async generateShares() {
+      this.encrypt = true;
       if (this.file) {
         // if image file is being encrypted, then send to image url
         const formData = new FormData();
@@ -71,10 +80,12 @@ export default {
     },
     // decrypt
     async recoverSecret() {
+      this.encrypt = false;
       if (this.file) {
         const formData = new FormData();
         formData.append('image', this.file);
-        formData.append('numBlocks', this.numBlocks);
+        formData.append('numBlocks', this.numShares);
+        formData.append('numThreshold', this.threshold);
 
         const response = await axios.post('http://127.0.0.1:5000/reconstruct-image', formData);
         this.result = response.data;
