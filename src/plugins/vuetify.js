@@ -10,5 +10,6 @@ export default createVuetify({
   directives,
   icons: {
     iconfont: 'mdi',
+    defaultSet: 'mdi',
   },
 })

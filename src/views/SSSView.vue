@@ -15,6 +15,13 @@
     </v-row>
   </v-container>
 
+  <v-row>
+      <v-col>
+        <v-btn color="primary" class="mr-4" @click="generateShares">Encrypt</v-btn>
+        <v-btn color="primary" @click="recoverSecret">Decrypt</v-btn>
+      </v-col>
+    </v-row>
+
   <v-container>
     <v-row justify="center" class="mt-4">
       <v-col cols="12" sm="8" md="6">

@@ -57,7 +57,7 @@ export default {
         {
           name: 'About our Team!',
           link: '/about',
-          content: 'Content for About our Team!',
+          content: 'Our fabulous, gorgeous Team! ✨',
         },
       ]
     }
