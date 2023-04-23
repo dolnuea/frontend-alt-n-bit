@@ -67,6 +67,7 @@ export default {
     fileChanged(event) {
       this.file = event.target.files[0];
       this.isImage = this.file.type.startsWith('image/');
+      // this.isZip = this.file.type.startsWith('application/');
     },
 
     // Send encryption data to the flask app
@@ -84,6 +85,7 @@ export default {
           console.log(response.data);
         } else {
           // handle non-image file encryption
+
         }
       } else {
         // original data
@@ -117,6 +119,13 @@ export default {
           console.log(response.data);
         } else {
           // handle non-image file decryption
+          const formData = new FormData();
+          formData.append('file', this.file);
+          formData.append('enck', this.enck);
+
+          const response = await axios.post('http://127.0.0.1:5000/decrypt-zip', formData);
+          this.result = response.data;
+          console.log(response.data);
         }
       } else {
         // const response = await axios.post('/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
