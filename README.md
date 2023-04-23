@@ -14,6 +14,11 @@ npm install -g @vue/cli
 npm install
 ```
 
+## To enable CORS with flask
+```
+npm install axios
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
