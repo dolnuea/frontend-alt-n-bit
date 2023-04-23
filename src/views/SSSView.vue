@@ -17,8 +17,8 @@
 
   <v-row>
     <v-col>
-      <v-btn color="primary" class="mr-4" @click="generateShares">Encrypt</v-btn>
-      <v-btn color="primary" @click="recoverSecret">Decrypt</v-btn>
+      <v-btn color="orange" class="mr-4" @click="generateShares">Encrypt</v-btn>
+      <v-btn color="orange" @click="recoverSecret">Decrypt</v-btn>
     </v-col>
   </v-row>
 

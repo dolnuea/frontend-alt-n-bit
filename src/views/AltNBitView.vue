@@ -11,6 +11,12 @@
       </v-row>
 
       <v-row>
+        <v-col cols="12" sm="4">
+          <v-text-field label="Enter the encryption key (ENCK)" v-model="enck" class="mb-4" />
+        </v-col>
+      </v-row>
+
+      <v-row>
         <v-col cols="12" sm="8">
           <v-textarea label="Text for encryption/decryption" v-model="text" no-resize rows="10" class="mb-4 mr-4" />
         </v-col>
@@ -19,8 +25,8 @@
 
     <v-row>
       <v-col>
-        <v-btn color="primary" class="mr-4" @click="encrypt">Encrypt</v-btn>
-        <v-btn color="primary" @click="decrypt">Decrypt</v-btn>
+        <v-btn color="orange" class="mr-4" @click="encrypt">Encrypt</v-btn>
+        <v-btn color="orange" @click="decrypt">Decrypt</v-btn>
       </v-col>
     </v-row>
 
@@ -56,6 +62,7 @@ export default {
       file: null,
       isImage: false,
       result: null,
+      enck: '',
     };
   },
   methods: {
@@ -83,6 +90,7 @@ export default {
           const formData = new FormData();
           formData.append('image', this.file);
           formData.append('numBlocks', this.numBlocks);
+          formData.append('enck', this.enck);
 
           const response = await axios.post('http://127.0.0.1:5000/encrypt-image', formData);
           this.result = response.data;
@@ -91,7 +99,7 @@ export default {
           // handle non-image file encryption
         }
       } else {
-        const response = await axios.post('http://127.0.0.1:5000/encrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        const response = await axios.post('http://127.0.0.1:5000/encrypt-text', { text: this.text, numBlocks: this.numBlocks, enck: this.enck });
           // .then(response => {
           //   console.log(response.data);
           // })
@@ -108,6 +116,7 @@ export default {
           const formData = new FormData();
           formData.append('image', this.file);
           formData.append('numBlocks', this.numBlocks);
+          formData.append('enck', this.enck);
 
           const response = await axios.post('http://127.0.0.1:5000/decrypt-image', formData);
           this.result = response.data;
@@ -117,7 +126,7 @@ export default {
         }
       } else {
         // const response = await axios.post('/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
-        const response = await axios.post('http://127.0.0.1:5000/decrypt-text', { text: this.text, numBlocks: this.numBlocks });
+        const response = await axios.post('http://127.0.0.1:5000/decrypt-text', { text: this.text, numBlocks: this.numBlocks, enck: this.enck });
         this.result = response.data;
         console.log(response.data);
       }
