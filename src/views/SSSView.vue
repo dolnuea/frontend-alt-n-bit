@@ -1,6 +1,6 @@
 <template>
   <v-container align-center max-width="600">
-    <v-file-input label="Upload image file" accept="image/*" @change="fileChanged" class="mb-4 ml-n10" />
+    <v-file-input label="Upload file" @change="fileChanged" class="mb-4 ml-n10" />
 
     <v-row>
       <v-col cols="12" sm="4">
@@ -67,9 +67,9 @@ export default {
     async generateShares() {
       this.encrypt = true;
       if (this.file) {
-        // if image file is being encrypted, then send to image url
+        // if file is being encrypted, then send to image url
         const formData = new FormData();
-        formData.append('image', this.file);
+        formData.append('file', this.file);
         formData.append('numShares', this.numShares);
         formData.append('numThreshold', this.threshold);
 
@@ -83,7 +83,7 @@ export default {
       this.encrypt = false;
       if (this.file) {
         const formData = new FormData();
-        formData.append('image', this.file);
+        formData.append('file', this.file);
         formData.append('numBlocks', this.numShares);
         formData.append('numThreshold', this.threshold);
 

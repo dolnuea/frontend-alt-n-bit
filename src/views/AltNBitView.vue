@@ -1,7 +1,7 @@
 <template>
 
     <v-container align-center max-width="600">
-      <v-file-input label="Upload file for encryption/decryption" accept="image/*" @change="fileChanged"
+      <v-file-input label="Upload file for encryption/decryption" @change="fileChanged"
         class="mb-4 ml-n10" />
 
       <v-row>
@@ -114,7 +114,7 @@ export default {
       if (this.file) {
         if (this.isImage) {
           const formData = new FormData();
-          formData.append('image', this.file);
+          formData.append('file', this.file);
           formData.append('numBlocks', this.numBlocks);
           formData.append('enck', this.enck);
 
