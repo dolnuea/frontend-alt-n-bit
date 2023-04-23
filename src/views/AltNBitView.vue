@@ -41,11 +41,7 @@
       </v-row>
     </v-container>
 
-<!-- form originally used to test the if frontend was connected with backend -->
-    <!-- <form @submit.prevent="sendMessage">
-      <input type="text" v-model="message">
-      <button type="submit">Send</button>
-    </form> -->
+
   
 </template>
 
@@ -66,16 +62,7 @@ export default {
     };
   },
   methods: {
-    // Test to see if sending messages works
-    // sendMessage() {
-    //   axios.post('http://127.0.0.1:5000/', { message: this.message })
-    //     .then(response => {
-    //       console.log(response.data);
-    //     })
-    //     .catch(error => {
-    //       console.error(error);
-    //     });
-    // },
+
 
     fileChanged(event) {
       this.file = event.target.files[0];
@@ -99,15 +86,22 @@ export default {
           // handle non-image file encryption
         }
       } else {
-        const response = await axios.post('http://127.0.0.1:5000/encrypt-text', { text: this.text, numBlocks: this.numBlocks, enck: this.enck });
-          // .then(response => {
-          //   console.log(response.data);
-          // })
-          // .catch(error => {
-          //   console.error(error);
-          // });
-        this.result = response.data;
-        console.log(response.data);
+        // original data
+        // const response = await axios.post('http://127.0.0.1:5000/encrypt-text', { text: this.text, numBlocks: this.numBlocks, enck: this.enck });
+        // this.result = response.data;
+        // console.log(response.data);
+        
+        // GETTING THE ZIP BACK BABY
+        const response = await axios.post('http://127.0.0.1:5000/encrypt-text', { text: this.text, numBlocks: this.numBlocks, enck: this.enck }, { responseType: 'blob' });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Text_Encrypted_Data.zip');
+        document.body.appendChild(link);
+        link.click();
+
+
+        
       }
     },
     async decrypt() {
