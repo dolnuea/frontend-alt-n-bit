@@ -111,7 +111,7 @@ const response = await axios.post('http://127.0.0.1:5000/generate-shares', formD
       if (this.file) {
         const formData = new FormData();
         formData.append('file', this.file);
-        formData.append('numBlocks', this.numShares);
+        formData.append('numShares', this.numShares);
         formData.append('numThreshold', this.threshold);
 
         try {
