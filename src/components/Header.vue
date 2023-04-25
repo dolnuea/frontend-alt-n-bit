@@ -49,9 +49,14 @@ export default {
       tab: null,
       items: [
         {
-          name: 'Alternate N Bit Encryption',
+          name: 'Alternate N Bit Text Encryption',
           link: '/',
-          content: 'Overcome post-encryption patterns with Alternate N Bit Encryption! 💥',
+          content: 'Overcome post-encryption patterns in text with Alternate N Bit Encryption! 💥',
+        },
+        {
+          name: 'Alternate N Bit Image Encryption',
+          link: '/alt-n-bit-image',
+          content: 'Overcome post-encryption patterns in image with Alternate N Bit Encryption! 💥',
         },
         {
           name: 'Secret Sharing and Homomorphism',

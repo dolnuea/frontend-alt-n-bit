@@ -1,13 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AltNBit from "../views/AltNBitView.vue";
+import AltNBitText from "../views/AltNBitViewText.vue";
+import AltNBitImage from "../views/AltNBitViewImage.vue";
 import SSS from "../views/SSSView.vue";
 
 const routes = [
 
   {
     path: "/", 
-    name: "AltNBit",
-    component: AltNBit
+    name: "AltNBitText",
+    component: AltNBitText
+  },
+  {
+    path: "/alt-n-bit-image", 
+    name: "AltNBitImage",
+    component: AltNBitImage
   },
   {
     path:'/sss',
