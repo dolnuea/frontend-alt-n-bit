@@ -147,10 +147,20 @@ export default {
           try {
             const response = await axios.post(
               "http://127.0.0.1:5000/decrypt-image",
-              formData
+              formData,
+              { responseType: "blob" } // set response type to blob
             );
-            this.result = response.data;
-            console.log(response.data);
+
+            const url = window.URL.createObjectURL(response.data); // no need to wrap in a Blob
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "Decrypted_Image.jpg");
+            document.body.appendChild(link);
+            link.click();
+            // this.result = response.data;
+            // console.log(response.data);
+
+
           } catch (error) {
             this.errorStatus = true;
             console.log(error);
@@ -189,7 +199,7 @@ export default {
 
           try {
             const response = await axios.post(
-              "http://127.0.0.1:5000/decrypt-zip",
+              "http://127.0.0.1:5000/decrypt-image",
               formData
             );
             this.result = response.data;
