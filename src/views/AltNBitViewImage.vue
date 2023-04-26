@@ -89,9 +89,10 @@ export default {
           try {
             const response = await axios.post(
               "http://127.0.0.1:5000/encrypt-image",
-              formData
+              formData,
+              { responseType: "blob" } // set response type to blob
             );
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const url = window.URL.createObjectURL(response.data); // no need to wrap in a Blob
             const link = document.createElement("a");
             link.href = url;
             link.setAttribute("download", "Image_Encrypted_Data.zip");
@@ -138,9 +139,9 @@ export default {
       this.errorStatus = false;
       if (this.file) {
         if (this.isImage) {
+        // handle image file decryption
           const formData = new FormData();
           formData.append("file", this.file);
-          formData.append("numBlocks", this.numBlocks);
           formData.append("enck", this.enck);
 
           try {
@@ -154,6 +155,32 @@ export default {
             this.errorStatus = true;
             console.log(error);
           }
+
+
+
+
+
+
+        // orig
+        // if (this.isImage) {
+        //   const formData = new FormData();
+        //   formData.append("file", this.file);
+        //   formData.append("numBlocks", this.numBlocks);
+        //   formData.append("enck", this.enck);
+
+        //   try {
+        //     const response = await axios.post(
+        //       "http://127.0.0.1:5000/decrypt-image",
+        //       formData
+        //     );
+        //     this.result = response.data;
+        //     console.log(response.data);
+        //   } catch (error) {
+        //     this.errorStatus = true;
+        //     console.log(error);
+        //   }
+
+          
         } else {
           // handle non-image file decryption
           const formData = new FormData();
