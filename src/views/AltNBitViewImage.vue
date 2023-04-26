@@ -80,23 +80,37 @@ export default {
       this.errorStatus = false;
       if (this.file) {
         if (this.isImage) {
-          // if image file is being encrypted, then send to image url
-          const formData = new FormData();
-          formData.append("image", this.file);
+          console.log(this.isImage);
+          let formData = new FormData();
+          formData.append('image', this.file);
           formData.append("numBlocks", this.numBlocks);
-          formData.append("enck", this.enck);
+          console.log(formData.get('image')); // check that the image data is present in the formData object
 
           try {
             const response = await axios.post(
               "http://127.0.0.1:5000/encrypt-image",
-              formData
+              formData,
+              { responseType: "blob" } // set response type to blob
             );
-            this.result = response.data;
-            console.log(response.data);
+            const url = window.URL.createObjectURL(response.data); // no need to wrap in a Blob
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "Image_Encrypted_Data.zip");
+            document.body.appendChild(link);
+            link.click();
+
+            // this.result = response.data;
+            // console.log(response.data);
+
+
           } catch (error) {
             this.errorStatus = true;
             console.log(error);
           }
+
+
+
+          
         } else {
           // handle non-image file encryption
           // TODO do we need this part?
@@ -125,9 +139,9 @@ export default {
       this.errorStatus = false;
       if (this.file) {
         if (this.isImage) {
+        // handle image file decryption
           const formData = new FormData();
           formData.append("file", this.file);
-          formData.append("numBlocks", this.numBlocks);
           formData.append("enck", this.enck);
 
           try {
@@ -141,6 +155,32 @@ export default {
             this.errorStatus = true;
             console.log(error);
           }
+
+
+
+
+
+
+        // orig
+        // if (this.isImage) {
+        //   const formData = new FormData();
+        //   formData.append("file", this.file);
+        //   formData.append("numBlocks", this.numBlocks);
+        //   formData.append("enck", this.enck);
+
+        //   try {
+        //     const response = await axios.post(
+        //       "http://127.0.0.1:5000/decrypt-image",
+        //       formData
+        //     );
+        //     this.result = response.data;
+        //     console.log(response.data);
+        //   } catch (error) {
+        //     this.errorStatus = true;
+        //     console.log(error);
+        //   }
+
+          
         } else {
           // handle non-image file decryption
           const formData = new FormData();
