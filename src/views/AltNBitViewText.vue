@@ -53,6 +53,7 @@
   </v-row>
 
   <v-container>
+    <h1>Results</h1>
     <v-row justify="center" class="mt-4">
       <v-col cols="12" sm="8" md="6">
         <v-card v-if="result" rounded min-height="500">
