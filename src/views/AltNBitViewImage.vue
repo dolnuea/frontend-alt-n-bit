@@ -80,23 +80,36 @@ export default {
       this.errorStatus = false;
       if (this.file) {
         if (this.isImage) {
-          // if image file is being encrypted, then send to image url
-          const formData = new FormData();
-          formData.append("image", this.file);
+          console.log(this.isImage);
+          let formData = new FormData();
+          formData.append('image', this.file);
           formData.append("numBlocks", this.numBlocks);
-          formData.append("enck", this.enck);
+          console.log(formData.get('image')); // check that the image data is present in the formData object
 
           try {
             const response = await axios.post(
               "http://127.0.0.1:5000/encrypt-image",
               formData
             );
-            this.result = response.data;
-            console.log(response.data);
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "Image_Encrypted_Data.zip");
+            document.body.appendChild(link);
+            link.click();
+
+            // this.result = response.data;
+            // console.log(response.data);
+
+
           } catch (error) {
             this.errorStatus = true;
             console.log(error);
           }
+
+
+
+          
         } else {
           // handle non-image file encryption
           // TODO do we need this part?
