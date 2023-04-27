@@ -119,10 +119,23 @@ export default {
         try {
           const response = await axios.post(
             "http://127.0.0.1:5000/reconstruct-image",
-            formData
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+              responseType: "blob",
+            }
           );
-          this.result = response.data;
-          console.log(response.data);
+          // this.result = response.data;
+          // console.log(response.data);
+
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "reconstructed_img.bmp");
+          document.body.appendChild(link);
+          link.click();
         } catch (error) {
           console.log(error);
           this.errorStatus = true;
