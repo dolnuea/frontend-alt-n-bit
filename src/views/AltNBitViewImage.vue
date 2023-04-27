@@ -82,9 +82,9 @@ export default {
         if (this.isImage) {
           console.log(this.isImage);
           let formData = new FormData();
-          formData.append('image', this.file);
+          formData.append("image", this.file);
           formData.append("numBlocks", this.numBlocks);
-          console.log(formData.get('image')); // check that the image data is present in the formData object
+          console.log(formData.get("image")); // check that the image data is present in the formData object
 
           try {
             const response = await axios.post(
@@ -101,16 +101,10 @@ export default {
 
             // this.result = response.data;
             // console.log(response.data);
-
-
           } catch (error) {
             this.errorStatus = true;
             console.log(error);
           }
-
-
-
-          
         } else {
           // handle non-image file encryption
           // TODO do we need this part?
@@ -138,76 +132,29 @@ export default {
     async decrypt() {
       this.errorStatus = false;
       if (this.file) {
-        if (this.isImage) {
         // handle image file decryption
-          const formData = new FormData();
-          formData.append("file", this.file);
-          formData.append("enck", this.enck);
+        const formData = new FormData();
+        formData.append("file", this.file);
+        formData.append("enck", this.enck);
 
-          try {
-            const response = await axios.post(
-              "http://127.0.0.1:5000/decrypt-image",
-              formData,
-              { responseType: "blob" } // set response type to blob
-            );
+        try {
+          const response = await axios.post(
+            "http://127.0.0.1:5000/decrypt-image",
+            formData,
+            { responseType: "blob" } // set response type to blob
+          );
 
-            const url = window.URL.createObjectURL(response.data); // no need to wrap in a Blob
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", "Decrypted_Image.jpg");
-            document.body.appendChild(link);
-            link.click();
-            // this.result = response.data;
-            // console.log(response.data);
-
-
-          } catch (error) {
-            this.errorStatus = true;
-            console.log(error);
-          }
-
-
-
-
-
-
-        // orig
-        // if (this.isImage) {
-        //   const formData = new FormData();
-        //   formData.append("file", this.file);
-        //   formData.append("numBlocks", this.numBlocks);
-        //   formData.append("enck", this.enck);
-
-        //   try {
-        //     const response = await axios.post(
-        //       "http://127.0.0.1:5000/decrypt-image",
-        //       formData
-        //     );
-        //     this.result = response.data;
-        //     console.log(response.data);
-        //   } catch (error) {
-        //     this.errorStatus = true;
-        //     console.log(error);
-        //   }
-
-          
-        } else {
-          // handle non-image file decryption
-          const formData = new FormData();
-          formData.append("file", this.file);
-          formData.append("enck", this.enck);
-
-          try {
-            const response = await axios.post(
-              "http://127.0.0.1:5000/decrypt-image",
-              formData
-            );
-            this.result = response.data;
-            console.log(response.data);
-          } catch (error) {
-            this.errorStatus = true;
-            console.log(error);
-          }
+          const url = window.URL.createObjectURL(response.data); // no need to wrap in a Blob
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "Decrypted_Image.png");
+          document.body.appendChild(link);
+          link.click();
+          // this.result = response.data;
+          // console.log(response.data);
+        } catch (error) {
+          this.errorStatus = true;
+          console.log(error);
         }
       }
     },

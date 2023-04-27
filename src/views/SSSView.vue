@@ -54,7 +54,6 @@ export default {
       shares: [],
       file: null,
       isImage: false,
-      shares: [],
       encrypt: false,
       errorStatus: false,
     };
